@@ -44,19 +44,14 @@ def check_and_respond(message, response_function, *args):
     first_name = user.first_name
     user_id = message.from_user.id
     required_channels = ["@cs_stg3", "@cs_stg3_onefile", "@cs_stg3_deleted", "@cs_apps"]
-    
+
     all_membership_valid = all(is_user_member(user_id, chat_id) for chat_id in required_channels)
-    
+
     if all_membership_valid:
         response_function(message, *args)
     else:
-        bot.send_message(
-            message.chat.id,
-            f"⤦ اوكف {first_name} شو ما مشترك بالقنوات ⁉️🫣\nاشترك وارجع اضغط على /start",
-            reply_markup=telebot.types.InlineKeyboardMarkup().add(
-                telebot.types.InlineKeyboardButton(
-                    text="اضغط هنا للأشتراك في القنوات",
-                    url=f"https://t.me/addlist/o4sSqlfAwQE5MDZi")))
+        bot.send_message(message.chat.id,f"⤦ اوكف {first_name} شو ما مشترك بالقنوات ⁉️🫣\nاشترك وارجع اضغط على /start\n• قناة الملازم: @cs_stg3\n• قناة الملخصات: @cs_stg3_onefile\n• قناة المهملات: @cs_stg3_deleted\n• قناة البرامج: @cs_apps")
+
 
 #--------------------------------------
 #---------- start process ----------
@@ -80,23 +75,26 @@ def send_welcome(message):
 def chose_from_markup(message, reply_markup):
     bot.reply_to(message, chose_from, reply_markup = reply_markup)
 
+about_bot_msg = ("<b>● عن بوت @cs_stg3_bot:</b>\n\n"
+        "<b>• بوت ملازم وملخصات وأشياء مساعدة لطلاب المرحلة الثالثة قسم علوم الحاسوب في كلية علوم الحاسوب وتكنولوجيا المعلومات جامعة واسط دفعة 2022-2025.</b>\n\n"
+        "<b>• البوت يسهل وصول الطالب للمادة وكل شيء يخصها من ملازم أصلية ومترجمة أو ملخصات أو البرامج التي يُطبق عليها الجانب العملي.</b>\n\n"
+        "<b>• مصادر البوت هي من القنوات الرئيسية للمرحلة الثالثة دفعة 2022-2025:</b>\n\n"
+        "  ⏎ قناة الكورس الثاني: \nرابط القناة: @cs_stg3\n\n"
+        "  ⏎ قناة الكورس الأول + ملازم السنة السابقة: \nرابط القناة: @cs_stg3_deleted\n\n"
+        "  ⏎ قناة المخلصات + الملازم المترجمة + الأسئلة والحلول: \nرابط القناة: @cs_stg3_onefile\n\n"
+        "  ⏎ قناة البرامج: \nرابط القناة: @cs_apps\n\n"
+        "<b>• تم إنشاء البوت بتاريخ 2024/7/28 بلغة Python مع مكتبة telebot من برمجة @ab0_alhasan.</b>\n\n"
+        "<b>• إذا أعجبك البوت، يمكنك تقييمه من خلال /rating.</b>\n\n\n"
+        "<b>• ملاحظات ⚠:</b>\n\n"
+        "  • يُستخدم البوت أساسًا عبر الأزرار الموجودة في قائمة التحكم التي تحمل رمز 🎛، بالإضافة إلى الأوامر مثل /start لتحديث البوت و /term1 لعرض قائمة الكورس الأول و /term2 لعرض قائمة الكورس الثاني. يُطلب من المستخدمين عدم إرسال أي رسائل نصية مباشرة إلى البوت.\n\n"
+        "  • جميع الرسائل المتبادلة بين المستخدم والبوت تظل سرية تمامًا ولن يتم تحويلها أو مشاركتها مع أي طرف آخر. الاستثناء الوحيد هو عند استخدام أزرار قائمة تقييم البوت، حيث سيتم إرسال تقييمات المستخدم إلى المسؤول عن البوت، @ab0_alhasan، و بأمكانه معرفة المعرف واسم الطالب.\n\n"
+        "  • رغم ذلك، يُنصح بعدم كتابة رسائل خاصة وذات أهمية داخل البوت، حيث لا يمكن ضمان حماية 100% للخصوصية في جميع الحالات.\n\n"
+        "<b>• السورس كود للبوت مع الملفات:</b> <a href='https://github.com/AboALhasanx/cs.stg3.bot'>https://github.com/AboALhasanx/cs.stg3.bot</a>\n\n"
+        "<b>✍🏻 ابـوالــحسـن: @ab0_alhasan</b>")
+
 @bot.message_handler(func=lambda message: message.text == "🪧 عن البوت 🪧")
 def about_bot(message):
-    bot.reply_to(
-        message,
-        "● عن بوت @cs_stg3_bot:\n\n"
-        "• بوت ملازم وملخصات وأشياء مساعدة لطلاب المرحلة الثالثة قسم علوم الحاسوب في كلية علوم الحاسوب وتكنولوجيا المعلومات جامعة واسط دفعة 2022-2025.\n\n"
-        "• البوت يسهل وصول الطالب للمادة وكلشي يخصها من ملازم اصلية ومترجمة او ملخصات او البرامج الي يطبق عليها الجانب العملي.\n\n"
-        "• مصادر البوت هي من القنوات الرئيسية للمرحلة الثالثة دفعة 2022-2025:\n\n"
-        "  • قناة الكورس الثاني: @cs_stg3\n"
-        "  • قناة الكورس الأول + ملازم السنة السابقة: @cs_stg3_deleted\n"
-        "  • قناة المخلصات + الملازم المترجمة + الاسئلة والحلول: @cs_stg3_onefile\n"
-        "  • قناة البرامج: @cs_apps\n\n"
-        "• تم انشاء البوت بتاريخ 2024/7/28 بلغة python مع مكتبة telebot من برمجة @ab0_alhasan.\n\n"
-        "• اذا عجبك البوت تكدر تقيم البوت عن طريق من /rating.\n\n"
-        "• السورس كود للبوت مع الملفات: https://github.com/AboALhasanx/cs.stg3.bot.\n\n"
-        "✍🏻 ابـوالــحسـن: @ab0_alhasan" 
-    )
+    bot.reply_to(message, about_bot_msg, parse_mode='HTML')
 
 
 #term1 buttons and commands----------------------
@@ -121,11 +119,11 @@ def handle_rating(message):
     user_id = message.from_user.id
     user_name = message.from_user.first_name
     username = message.from_user.username or "غير معروف"  # Use 'غير معروف' if username is not set
-    
+
     good_response = ["حبيب اخوك 😇", "حبيبي نورتني 😌", "صدك جذب تدلل 😊"]
     veryGood_response = ["اخويا ياسطا 😎🤙🏻", "تسلم يالقالي 😴🫶", "نورك هذا لو الشمس؟ عمي منورنا 😔❤️‍🔥", "يا هلا وغلا بالعزيز 🫂❤️‍🔥", "شهادة اعتزُ بيها 😌🤝🏻", "هاي الوردة تستاهلك 🌹🫴"]
     ok_response = ["خوش 🤨", "تمام 🙄", "ماشي 🙃", "اوك 🌚", "شوكران يمحترم 😒", "مثل تقديرك 🫠"]
-    
+
     if rating == "تحجي صدك 🦦؟":
         response_text = "هاي ليش 💔🗿؟ \n راسلني وكلي اذا اكو مشكلة بالبوت @ab0_alhasan"
     elif rating == "الله على الروقان ✨😌":
@@ -138,7 +136,7 @@ def handle_rating(message):
         ADMIN_ID,
         f"اكلك هذا {user_name} الي معرفه (@{username}) يكول \n\"{rating}\" على البوت 🫣"
     )
-    
+
     # Show the main menu again
     bot.send_message(
         message.chat.id, response_text, reply_markup=main_term_select()
@@ -161,84 +159,84 @@ def to_term1_menu(message):
 @bot.message_handler(func=lambda message: message.text == ai_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, ai_lab_buttons())    
+        chose_from_markup(message, ai_lab_buttons())
     check_and_respond(message, respond)
-    
+
 @bot.message_handler(func=lambda message: message.text == ai_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, ai_theo_buttons())    
+        chose_from_markup(message, ai_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == software_engineering_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, software_eng_lab_buttons())    
+        chose_from_markup(message, software_eng_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == software_engineering_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, software_eng_theo_buttons())    
+        chose_from_markup(message, software_eng_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == multimedia_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, multimedia_lab_buttons())    
+        chose_from_markup(message, multimedia_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == multimedia_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, multimedia_theo_buttons())    
+        chose_from_markup(message, multimedia_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == networks1_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, networks1_lab_buttons())    
+        chose_from_markup(message, networks1_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == networks1_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, networks1_theo_buttons())    
+        chose_from_markup(message, networks1_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == compilers1_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, compilers1_lab_buttons())    
+        chose_from_markup(message, compilers1_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == compilers1_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, compilers1_theo_buttons())    
+        chose_from_markup(message, compilers1_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == english_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, english_buttons())    
+        chose_from_markup(message, english_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == operations_research_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, operation_research_buttons())    
+        chose_from_markup(message, operation_research_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == term1_Table_of_lectures) #الجدول
 def redirect(message):
     def respond(message):
-        bot.forward_message(message.chat.id, cs_stg3, 150)    
+        bot.forward_message(message.chat.id, cs_stg3, 150)
     check_and_respond(message, respond)
 
 #----------------------------------------------------------------------------
 #term2 buttons and commands--------------------------------------------------
-@bot.message_handler(commands=['term2']) #command 
+@bot.message_handler(commands=['term2']) #command
 def update_buttons(message):
     def respond(message):
         bot.reply_to(message, chose_from, reply_markup = main_term2_keyboard())
@@ -253,75 +251,75 @@ def to_term2_menu(message):
 @bot.message_handler(func=lambda message: message.text == web_prog_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, webProgramming_buttons())    
+        chose_from_markup(message, webProgramming_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == compilers2_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, compilers2_lab_buttons())    
+        chose_from_markup(message, compilers2_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == compilers2_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, compilers2_theo_buttons())    
+        chose_from_markup(message, compilers2_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == networks2_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, networks2_lab_buttons())    
+        chose_from_markup(message, networks2_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == networks2_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, networks2_theo_buttons())    
+        chose_from_markup(message, networks2_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == dis_db_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, distributed_databases_lab_buttons())    
+        chose_from_markup(message, distributed_databases_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == dis_db_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, distributed_databases_theo_buttons())    
+        chose_from_markup(message, distributed_databases_theo_buttons())
     check_and_respond(message, respond)
-    
+
 @bot.message_handler(func=lambda message: message.text == data_enc_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, data_encryption_lab_buttons())    
+        chose_from_markup(message, data_encryption_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == data_enc_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, data_encryption_theo_buttons())    
+        chose_from_markup(message, data_encryption_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == data_mining_lab_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, data_mining_lab_buttons())    
+        chose_from_markup(message, data_mining_lab_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == data_mining_theo_title)
 def redirect(message):
     def respond(message):
-        chose_from_markup(message, data_mining_theo_buttons())    
+        chose_from_markup(message, data_mining_theo_buttons())
     check_and_respond(message, respond)
 
 @bot.message_handler(func=lambda message: message.text == term2_Table_of_lectures ) #الجدول
 def redirect(message):
     def respond(message):
-        bot.forward_message(message.chat.id, cs_stg3, 151)    
+        bot.forward_message(message.chat.id, cs_stg3, 151)
     check_and_respond(message, respond)
-    
+
 #--------------------------------------------------------
 @bot.message_handler(func=lambda message: message.text == back_term1)
 def return_to_term1_menu(message):
@@ -355,7 +353,7 @@ def handle_button(message):
 def get_file_command(message, command):
     data = load_data(file_path)
     post_id_or_list = data['commands'].get(command)
-    
+
     if '_full' in command:
         CHANNEL_ID = cs_stg3
     elif '_lectures' in command:
@@ -378,12 +376,12 @@ def get_file_command(message, command):
             else:
                 bot.forward_message(message.chat.id, CHANNEL_ID, post_id_or_list)
                 bot.reply_to(message, message_text)
-                
+
         except Exception as e:
             bot.reply_to(message, f"💢اكو مشكلة من البوت.\n Error: {e}")
     else:
         bot.reply_to(message, "⏳ماكو حاليا هذا الملف")
 
 
-    
+
 bot.polling()
